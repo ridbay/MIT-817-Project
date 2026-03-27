@@ -575,7 +575,22 @@ export const PG_COURSES: Record<string, Course[]> = {
       "status": "C"
     }
   ],
-  "MSC": [],
+  "MSC": [
+    { "code": "CSC800", "title": "Software Design and Development", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC801", "title": "Programming Languages", "units": 3, "level": 800, "status": "Compulsory" },
+    { "code": "CSC802", "title": "Compiler Construction", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC810", "title": "Operating Systems and Computer Architecture", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC811", "title": "Computer Communication Network and Distributed Processing", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC820", "title": "Advanced Data Structure", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC812", "title": "Current Topics in Computing", "units": 3, "level": 800, "status": "Compulsory" },
+    { "code": "CSC821", "title": "Automata, Computability and Formal Languages", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC830", "title": "Database Management System Design", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC831", "title": "Artificial Intelligence", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC840", "title": "Computer Graphics", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC841", "title": "Modelling and Simulation", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC842", "title": "Advanced Numerical Computation", "units": 3, "level": 800, "status": "Elective" },
+    { "code": "CSC899", "title": "M.Sc. Project", "units": 6, "level": 800, "status": "Compulsory" }
+  ],
   "MIT": [
     {
       "code": "MIT801",

@@ -47,7 +47,7 @@ const Results: React.FC = () => {
             </div>
             <div className="res-stat-content">
               <div className="res-stat-label">CUMULATIVE GPA</div>
-              <div className="res-stat-value">{currentGPA.toFixed(2)}</div>
+              <div className="res-stat-value">{currentGPA.toFixed(2)} / 5.0</div>
             </div>
           </div>
           <div className="res-stat-card">

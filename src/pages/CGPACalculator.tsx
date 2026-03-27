@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../hooks/useAppContext';
 import { UG_COURSES, PG_COURSES, Course } from '../data/curriculum';
-import { PROGRAMME_RULES, UG_GRADE_MAPPING, ProgrammeType } from '../data/rules';
-import { calculateGPA, getUGClassification, getPGStatus, scoreToGrade, gradeToPoint, CourseAttempt, getUnitProgress } from '../lib/gpa-engine';
+import { UG_GRADE_MAPPING, PG_GRADE_MAPPING, PROGRAMME_RULES, ProgrammeType } from '../data/rules';
+import { calculateGPA, getUGClassification, getPGStatus, getUnitProgress, CourseAttempt } from '../lib/gpa-engine';
 import UnitProgress from '../components/UnitProgress';
 import './CGPACalculator.css';
 
@@ -10,6 +10,9 @@ const CGPACalculator: React.FC = () => {
   const { studentType, user, setCourseRecords, courseRecords } = useAppContext();
   const [academicYear, setAcademicYear] = useState('2023/2024');
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [showConfirmSwitch, setShowConfirmSwitch] = useState(false);
+  
+  const gradeMapping = studentType === 'pg' ? PG_GRADE_MAPPING : UG_GRADE_MAPPING;
   const [selectedProgramme, setSelectedProgramme] = useState<ProgrammeType>(
     (user?.programme || (studentType === 'pg' ? 'MIT' : 'UG-CS')) as ProgrammeType
   );
@@ -24,27 +27,36 @@ const CGPACalculator: React.FC = () => {
     return PG_COURSES[selectedProgramme] || [];
   }, [selectedProgramme, selectedLevel]);
 
+  // Autopopulate from saved records
+  React.useEffect(() => {
+    if (activeCourses.length === 0 && courseRecords.length > 0) {
+      const savedForProgramme = courseRecords.filter(r => r.programmeId === selectedProgramme);
+      if (savedForProgramme.length > 0) {
+        setActiveCourses(savedForProgramme);
+      }
+    }
+  }, [selectedProgramme, courseRecords.length]); // Only re-run if programme changes or records length changes
+
   const addCourseFromCurriculum = (course: Course) => {
     if (activeCourses.find(c => c.courseCode === course.code)) return;
     setActiveCourses([...activeCourses, {
       courseCode: course.code,
       courseTitle: course.title,
       units: course.units,
-      semesterId: 'current'
+      grade: 'A',
+      point: 5,
+      semesterId: '1'
     }]);
   };
 
-  const updateAttempt = (idx: number, field: keyof CourseAttempt, value: any) => {
+  const updateCourse = (index: number, field: keyof CourseAttempt, value: any) => {
     const updated = [...activeCourses];
-    const attempt = { ...updated[idx], [field]: value };
-
-    // Auto-calculate point if grade is selected
     if (field === 'grade') {
-      const mapping = UG_GRADE_MAPPING; // Default mapping
-      attempt.point = gradeToPoint(value, mapping);
+      const mapping = gradeMapping.find(m => m.grade === value);
+      updated[index] = { ...updated[index], grade: value, point: mapping?.point || 0 };
+    } else {
+      updated[index] = { ...updated[index], [field]: value };
     }
-
-    updated[idx] = attempt;
     setActiveCourses(updated);
   };
 
@@ -55,10 +67,25 @@ const CGPACalculator: React.FC = () => {
   const handleSaveRecords = () => {
     if (activeCourses.length === 0) return;
     
+    // Check if there are records for a different programme
+    const differentProgramme = courseRecords.length > 0 && 
+      courseRecords.some(r => r.programmeId && r.programmeId !== selectedProgramme);
+
+    if (differentProgramme) {
+      setShowConfirmSwitch(true);
+      return;
+    }
+
+    executeSave();
+  };
+
+  const executeSave = (clearExisting = false) => {
     setCourseRecords(prev => {
+      const recordsToKeep = clearExisting ? [] : prev;
+      
       // Avoid duplicate courses by checking combination of courseCode and semesterId
       const existingKey = (c: CourseAttempt) => `${c.courseCode}-${c.semesterId}`;
-      const existingIds = new Set(prev.map(existingKey));
+      const existingIds = new Set(recordsToKeep.map(existingKey));
       
       const newRecords: CourseAttempt[] = activeCourses
         .filter(ac => !existingIds.has(`${ac.courseCode}-${ac.semesterId}`))
@@ -69,13 +96,14 @@ const CGPACalculator: React.FC = () => {
           grade: ac.grade || '',
           point: ac.point || 0,
           semesterId: ac.semesterId,
-          programmeId: selectedProgramme, // Tag with the active programme
+          programmeId: selectedProgramme, 
         }));
         
-      return [...prev, ...newRecords];
+      return [...recordsToKeep, ...newRecords];
     });
     
     setSaveSuccess(true);
+    setShowConfirmSwitch(false);
     setTimeout(() => setSaveSuccess(false), 3000);
   };
 
@@ -167,16 +195,16 @@ const CGPACalculator: React.FC = () => {
                   <span className="cgpa-course-title-sub">{attempt.courseTitle}</span>
                 </div>
                 <span className="cgpa-course-units">{attempt.units}</span>
-                <select
-                  className="cgpa-input-score"
-                  value={attempt.grade || ''}
-                  onChange={(e) => updateAttempt(idx, 'grade', e.target.value)}
-                >
-                  <option value="">Grade</option>
-                  {UG_GRADE_MAPPING.map(m => (
-                    <option key={m.grade} value={m.grade}>{m.grade}</option>
-                  ))}
-                </select>
+                <div className="res-cell">
+                  <select 
+                    value={attempt.grade} 
+                    onChange={(e) => updateCourse(idx, 'grade', e.target.value)}
+                  >
+                    {gradeMapping.map(m => (
+                      <option key={m.grade} value={m.grade}>{m.grade}</option>
+                    ))}
+                  </select>
+                </div>
                 <span className={`cgpa-grade-display ${attempt.grade ? `grade-${attempt.grade.toLowerCase()}` : ''}`}>
                   {attempt.grade || '-'} ({attempt.point || '0.0'})
                 </span>
@@ -240,20 +268,43 @@ const CGPACalculator: React.FC = () => {
         </div>
 
         <div className="cgpa-side-actions">
-           <button 
-             className={`cgpa-save-btn ${saveSuccess ? 'cgpa-save-btn--success' : ''}`}
-             onClick={handleSaveRecords}
-             disabled={activeCourses.length === 0}
-           >
-             {saveSuccess ? (
-               <>
-                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                   <polyline points="20 6 9 17 4 12" />
+           {showConfirmSwitch ? (
+             <div className="cgpa-confirm-card">
+               <div className="cgpa-confirm-icon">
+                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                   <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                   <line x1="12" y1="9" x2="12" y2="13" />
+                   <line x1="12" y1="17" x2="12.01" y2="17" />
                  </svg>
-                 Saved Successfully
-               </>
-             ) : 'Save to Academic Records'}
-           </button>
+               </div>
+               <p className="cgpa-confirm-text">
+                 You already have records for another programme. Saving this will <strong>overwrite</strong> them.
+               </p>
+               <div className="cgpa-confirm-btns">
+                 <button className="cgpa-confirm-btn cgpa-confirm-btn--danger" onClick={() => executeSave(true)}>
+                   Overwrite
+                 </button>
+                 <button className="cgpa-confirm-btn cgpa-confirm-btn--cancel" onClick={() => setShowConfirmSwitch(false)}>
+                   Cancel
+                 </button>
+               </div>
+             </div>
+           ) : (
+             <button 
+               className={`cgpa-save-btn ${saveSuccess ? 'cgpa-save-btn--success' : ''}`}
+               onClick={handleSaveRecords}
+               disabled={activeCourses.length === 0}
+             >
+               {saveSuccess ? (
+                 <>
+                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                     <polyline points="20 6 9 17 4 12" />
+                   </svg>
+                   Saved Successfully
+                 </>
+               ) : 'Save to Academic Records'}
+             </button>
+           )}
         </div>
       </aside>
     </div>

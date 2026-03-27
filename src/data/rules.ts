@@ -17,6 +17,15 @@ export const UG_GRADE_MAPPING: GradeMapping[] = [
   { scoreMin: 0, scoreMax: 39, grade: 'F', point: 0.0 },
 ];
 
+export const PG_GRADE_MAPPING: GradeMapping[] = [
+  { scoreMin: 70, scoreMax: 100, grade: 'A', point: 5.0 },
+  { scoreMin: 60, scoreMax: 69, grade: 'B', point: 4.0 },
+  { scoreMin: 50, scoreMax: 59, grade: 'C', point: 3.0 },
+  { scoreMin: 45, scoreMax: 49, grade: 'D', point: 2.0 },
+  { scoreMin: 40, scoreMax: 44, grade: 'E', point: 1.0 },
+  { scoreMin: 0, scoreMax: 39, grade: 'F', point: 0.0 },
+];
+
 export interface ProgrammeRule {
   programme: ProgrammeType;
   category: ProgrammeCategory;
@@ -49,9 +58,9 @@ export const PROGRAMME_RULES: Record<ProgrammeType, ProgrammeRule> = {
   'MSC': {
     programme: 'MSC',
     category: 'PG',
-    minUnits: 24,
+    minUnits: 27, // Per Image 10: "at least 27 units"
     maxUnits: 30,
-    minPassPoint: 1.0,
+    minPassPoint: 1.0, // Per Image 9: "grade E and grade point 1.0"
     minPassMark: 40,
     withdrawCgpa: 1.5,
     failedUnitLimit: 6,
@@ -59,9 +68,9 @@ export const PROGRAMME_RULES: Record<ProgrammeType, ProgrammeRule> = {
   'MIT': {
     programme: 'MIT',
     category: 'PG',
-    minUnits: 36,
+    minUnits: 54, // Per Image 8: "must pass a minimum of 54 units"
     maxUnits: 54,
-    minPassPoint: 1.0,
+    minPassPoint: 1.0, 
     minPassMark: 40,
     withdrawCgpa: 1.5,
     failedUnitLimit: 9,
