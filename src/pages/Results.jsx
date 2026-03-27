@@ -1,13 +1,5 @@
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../hooks/useAppContext';
 import './Results.css';
-
-const courses = [
-  { code: 'CSC 401', title: 'Advanced Distributed Computing Systems', unit: '4.0', grade: 'A', points: '20.0' },
-  { code: 'MAT 415', title: 'Numerical Analysis and Optimization', unit: '3.0', grade: 'A', points: '15.0' },
-  { code: 'CSC 405', title: 'Human Computer Interaction Design', unit: '3.0', grade: 'B', points: '12.0' },
-  { code: 'SEN 402', title: 'Software Architecture & Cloud Patterns', unit: '4.0', grade: 'A', points: '20.0' },
-  { code: 'GNS 401', title: 'Entrepreneurship & Ethical Leadership', unit: '2.0', grade: 'A', points: '10.0' },
-];
 
 function Results() {
   const { studentType } = useAppContext();

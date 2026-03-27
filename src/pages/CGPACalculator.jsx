@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useState } from 'react';
+import { useAppContext } from '../hooks/useAppContext';
 import './CGPACalculator.css';
 
 function CGPACalculator() {
@@ -10,10 +10,6 @@ function CGPACalculator() {
     { name: '', unit: '', grade: '' },
     { name: '', unit: '', grade: '' },
   ]);
-
-  useEffect(() => {
-    setProgrammeType(studentType === 'pg' ? 'Postgraduate' : 'Undergraduate');
-  }, [studentType]);
 
   const addRow = () => setCourses([...courses, { name: '', unit: '', grade: '' }]);
   const clearAll = () => setCourses([{ name: '', unit: '', grade: '' }]);

@@ -1,4 +1,3 @@
-import { useAppContext } from '../context/AppContext';
 import './Research.css';
 
 const milestones = [
@@ -10,8 +9,6 @@ const milestones = [
 ];
 
 function Research() {
-  const { user } = useAppContext();
-
   return (
     <div className="res-page researcher-view">
       <div className="res-header">

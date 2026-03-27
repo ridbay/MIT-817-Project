@@ -1,6 +1,5 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-
-const AppContext = createContext();
+import { useState, useEffect } from 'react';
+import { AppContext } from './AppContext';
 
 export const AppProvider = ({ children }) => {
   const [theme, setTheme] = useState('dark');
@@ -30,12 +29,4 @@ export const AppProvider = ({ children }) => {
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-};
-
-export const useAppContext = () => {
-  const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('useAppContext must be used within an AppProvider');
-  }
-  return context;
 };
