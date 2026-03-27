@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useAppContext } from '../hooks/useAppContext';
 import './DashboardLayout.css';
 
 const TopBar: React.FC = () => {
   const [searchVal, setSearchVal] = useState<string>('');
   const location = useLocation();
+  const { user, studentType } = useAppContext();
   const isAdmin = location.pathname.startsWith('/dashboard/admin');
+
+  // Helper to get initials
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+  };
 
   return (
     <header className="sd-topbar">
@@ -45,15 +52,19 @@ const TopBar: React.FC = () => {
         </button>
         <div className="sd-user-profile">
           <div className="sd-user-info">
-            <div className="sd-user-name">{isAdmin ? "Admin Dean" : "Alex Mercer"}</div>
+            <div className="sd-user-name">{isAdmin ? "Admin Dean" : (user?.name || "Guest Student")}</div>
             <div className="sd-user-meta-row">
-              <span className="sd-user-type-badge">{isAdmin ? "STAFF" : "PG"}</span>
-              <span className="sd-user-matric">{isAdmin ? "DIR-001" : "2024/ENG/042"}</span>
+              <span className="sd-user-type-badge">{isAdmin ? "STAFF" : (studentType?.toUpperCase() || "UG")}</span>
+              <span className="sd-user-matric">{isAdmin ? "DIR-001" : (user?.matric || "N/A")}</span>
             </div>
-            <div className="sd-user-role">{isAdmin ? "Registrar Office" : "Postgraduate Student"}</div>
+            <div className="sd-user-role">
+              {isAdmin ? "Registrar Office" : (studentType === 'pg' ? "Postgraduate Student" : "Undergraduate Student")}
+            </div>
           </div>
           <button className="sd-avatar-btn" id="avatar-btn" aria-label="Profile">
-            <div className="sd-avatar">{isAdmin ? "AD" : "AM"}</div>
+            <div className="sd-avatar">
+              {isAdmin ? "AD" : (user ? getInitials(user.name) : "ST")}
+            </div>
           </button>
         </div>
       </div>

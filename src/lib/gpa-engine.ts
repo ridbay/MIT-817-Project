@@ -8,6 +8,7 @@ export interface CourseAttempt {
   grade?: string;
   point?: number;
   semesterId: string;
+  programmeId?: string;
 }
 
 export interface CalculationResult {

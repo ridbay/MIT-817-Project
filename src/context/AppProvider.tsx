@@ -2,12 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { AppContext, AppContextType, User, StudentType } from './AppContext';
 import { CourseAttempt } from '../lib/gpa-engine';
 
+const STORAGE_KEY = 'mit817_academic_records_v1';
+
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<string>('dark');
   const [user, setUser] = useState<User | null>(null);
   const [studentType, setStudentType] = useState<StudentType>('ug'); 
   const [loading, setLoading] = useState<boolean>(false);
-  const [courseRecords, setCourseRecords] = useState<CourseAttempt[]>([]);
+  const [courseRecords, setCourseRecords] = useState<CourseAttempt[]>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Persist courseRecords to localStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(courseRecords));
+  }, [courseRecords]);
 
   // Example effect
   useEffect(() => {

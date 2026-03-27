@@ -95,12 +95,12 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isAdmin = false }) => {
   const navigate = useNavigate();
-  const { studentType } = useAppContext();
+  const { studentType, user } = useAppContext();
   
   const navItems: NavItem[] = isAdmin ? [...adminNav] : [...studentNav];
 
-  // Add Research for PG students
-  if (!isAdmin && studentType === 'pg') {
+  // Add Research for students who need it
+  if (!isAdmin && user?.needsResearch) {
     // Insert after results
     const resultsIdx = navItems.findIndex(item => item.icon === 'results');
     navItems.splice(resultsIdx + 1, 0, { icon: 'research', label: 'Research', to: '/dashboard/student/research' });

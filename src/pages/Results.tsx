@@ -10,14 +10,16 @@ const Results: React.FC = () => {
 
 
 
-  // Use stored records or fallback to empty
-  const records = courseRecords.length > 0 ? courseRecords : [];
+  const selectedProgramme = (user?.programme || (studentType === 'pg' ? 'MIT' : 'UG-CS')) as ProgrammeType;
+  const rules = PROGRAMME_RULES[selectedProgramme];
+
+  // Filter records to only show those belonging to the current programme
+  const records = useMemo(() => {
+    return courseRecords.filter(r => !r.programmeId || r.programmeId === selectedProgramme);
+  }, [courseRecords, selectedProgramme]);
   
   const currentGPA = useMemo(() => calculateGPA(records), [records]);
   const totalUnits = useMemo(() => records.reduce((acc: number, r: CourseAttempt) => acc + r.units, 0), [records]);
-  
-  const selectedProgramme = (user?.programme || (studentType === 'pg' ? 'MIT' : 'UG-CS')) as ProgrammeType;
-  const rules = PROGRAMME_RULES[selectedProgramme];
 
   const classification = selectedProgramme === 'UG-CS'
     ? getUGClassification(currentGPA)

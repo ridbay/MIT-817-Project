@@ -12,7 +12,12 @@ export interface User {
   matric?: string;
   programmeName?: string;
   programme?: ProgrammeType;
-  level?: string;
+  level?: string | number;
+  department?: string;
+  cgpa?: number;
+  gradYear?: number;
+  status?: string;
+  needsResearch?: boolean;
 }
 
 export interface AppContextType {

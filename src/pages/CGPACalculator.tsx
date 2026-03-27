@@ -7,7 +7,9 @@ import UnitProgress from '../components/UnitProgress';
 import './CGPACalculator.css';
 
 const CGPACalculator: React.FC = () => {
-  const { studentType, user } = useAppContext();
+  const { studentType, user, setCourseRecords, courseRecords } = useAppContext();
+  const [academicYear, setAcademicYear] = useState('2023/2024');
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [selectedProgramme, setSelectedProgramme] = useState<ProgrammeType>(
     (user?.programme || (studentType === 'pg' ? 'MIT' : 'UG-CS')) as ProgrammeType
   );
@@ -46,10 +48,39 @@ const CGPACalculator: React.FC = () => {
     setActiveCourses(updated);
   };
 
-  const removeCourse = (idx: number) => {
+  const handleRemoveCourse = (idx: number) => {
     setActiveCourses(activeCourses.filter((_, i) => i !== idx));
   };
 
+  const handleSaveRecords = () => {
+    if (activeCourses.length === 0) return;
+    
+    setCourseRecords(prev => {
+      // Avoid duplicate courses by checking combination of courseCode and semesterId
+      const existingKey = (c: CourseAttempt) => `${c.courseCode}-${c.semesterId}`;
+      const existingIds = new Set(prev.map(existingKey));
+      
+      const newRecords: CourseAttempt[] = activeCourses
+        .filter(ac => !existingIds.has(`${ac.courseCode}-${ac.semesterId}`))
+        .map(ac => ({
+          courseCode: ac.courseCode,
+          courseTitle: ac.courseTitle,
+          units: ac.units,
+          grade: ac.grade || '',
+          point: ac.point || 0,
+          semesterId: ac.semesterId,
+          programmeId: selectedProgramme, // Tag with the active programme
+        }));
+        
+      return [...prev, ...newRecords];
+    });
+    
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 3000);
+  };
+
+  const totalUnits = useMemo(() => activeCourses.reduce((acc, c) => acc + c.units, 0), [activeCourses]);
+  const totalPoints = useMemo(() => activeCourses.reduce((acc, c) => acc + (c.units * (c.point || 0)), 0), [activeCourses]);
   const currentGPA = calculateGPA(activeCourses);
   const rules = PROGRAMME_RULES[selectedProgramme];
   
@@ -149,7 +180,7 @@ const CGPACalculator: React.FC = () => {
                 <span className={`cgpa-grade-display ${attempt.grade ? `grade-${attempt.grade.toLowerCase()}` : ''}`}>
                   {attempt.grade || '-'} ({attempt.point || '0.0'})
                 </span>
-                <button className="cgpa-row-remove" onClick={() => removeCourse(idx)}>×</button>
+                <button className="cgpa-row-remove" onClick={() => handleRemoveCourse(idx)}>×</button>
               </div>
             ))}
             {activeCourses.length === 0 && (
@@ -166,6 +197,19 @@ const CGPACalculator: React.FC = () => {
           <div className="cgpa-standing-label">CURRENT GPA</div>
           <div className="cgpa-standing-value">
             {currentGPA.toFixed(2)}<span className="cgpa-standing-max">/ 5.0</span>
+          </div>
+          <div className="cgpa-standing-info">
+            <div className="cgpa-stat-split">
+              <div className="cgpa-stat-item">
+                <div className="cgpa-stat-label">TOTAL UNITS</div>
+                <div className="cgpa-stat-val">{totalUnits}</div>
+              </div>
+              <div className="cgpa-stat-sep" />
+              <div className="cgpa-stat-item">
+                <div className="cgpa-stat-label">GRADE POINTS</div>
+                <div className="cgpa-stat-val">{totalPoints.toFixed(1)}</div>
+              </div>
+            </div>
           </div>
           <div className="cgpa-standing-badge">
             {standing.toUpperCase()}
@@ -196,8 +240,19 @@ const CGPACalculator: React.FC = () => {
         </div>
 
         <div className="cgpa-side-actions">
-           <button className="cgpa-save-btn">
-              Save to Academic Records
+           <button 
+             className={`cgpa-save-btn ${saveSuccess ? 'cgpa-save-btn--success' : ''}`}
+             onClick={handleSaveRecords}
+             disabled={activeCourses.length === 0}
+           >
+             {saveSuccess ? (
+               <>
+                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                   <polyline points="20 6 9 17 4 12" />
+                 </svg>
+                 Saved Successfully
+               </>
+             ) : 'Save to Academic Records'}
            </button>
         </div>
       </aside>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../hooks/useAppContext";
 import { StudentType } from "../context/AppContext";
+import { STUDENTS } from "../data/students";
 import "./StudentLogin.css";
 
 const Login: React.FC = () => {
@@ -10,6 +11,7 @@ const Login: React.FC = () => {
   const [matric, setMatric] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { setStudentType, setUser } = useAppContext();
 
@@ -23,13 +25,27 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock user data
-    setUser({
-      name: tab === "ug" ? "Alex M. Thompson" : "Dr. Sarah Rodriguez",
-      matric: matric || (tab === "ug" ? "UG/2023/10234" : "PG/2023/00123"),
-      role: 'student'
-    });
-    navigate("/dashboard/student");
+    setError(null);
+
+    const student = STUDENTS.find(s => s.matric === matric);
+    
+    if (student && student.surname.toLowerCase() === password.toLowerCase()) {
+      setUser({
+        name: student.name,
+        matric: student.matric,
+        role: 'student',
+        department: student.department,
+        programmeName: student.programme,
+        level: student.level,
+        cgpa: student.cgpa,
+        gradYear: student.gradYear,
+        status: student.status,
+        needsResearch: student.needsResearch
+      });
+      navigate("/dashboard/student");
+    } else {
+      setError("The matric number or surname is incorrect. Please try again.");
+    }
   };
 
   return (
@@ -106,7 +122,6 @@ const Login: React.FC = () => {
             dashboard.
           </p>
 
-          {/* Tabs */}
           <div className="login-tabs" role="tablist">
             <button
               id="tab-ug"
@@ -127,6 +142,17 @@ const Login: React.FC = () => {
               POSTGRADUATE
             </button>
           </div>
+
+          {error && (
+            <div className="login-error-banner" role="alert">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              <span>{error}</span>
+            </div>
+          )}
 
           {/* Form */}
           <form className="login-form" onSubmit={handleSubmit} noValidate>

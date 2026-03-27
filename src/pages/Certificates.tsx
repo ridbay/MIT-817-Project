@@ -1,7 +1,11 @@
 import React from 'react';
+import { useAppContext } from '../hooks/useAppContext';
 import './Certificates.css';
 
 const Certificates: React.FC = () => {
+  const { user, studentType } = useAppContext();
+  
+  const programmeName = user?.programmeName || (studentType === 'pg' ? "Master of Information Technology (MIT)" : "B.Sc. Computer Science");
   return (
     <div className="cert-page">
       {/* Breadcrumbs & Header */}
@@ -45,12 +49,12 @@ const Certificates: React.FC = () => {
                 <span className="cert-item-label">Full Name</span>
                 <span className="cert-verified-badge">Verified</span>
               </div>
-              <div className="cert-item-value">Alexander Johnathan Pierce</div>
+              <div className="cert-item-value">{user?.name || "Guest Student"}</div>
             </div>
 
             <div className="cert-detail-item">
               <span className="cert-item-label">Programme of Study</span>
-              <div className="cert-item-value">Master of Science in Artificial Intelligence</div>
+              <div className="cert-item-value">{programmeName}</div>
             </div>
 
             <div className="cert-detail-row">
@@ -115,12 +119,12 @@ const Certificates: React.FC = () => {
               {/* Mock Certificate Content */}
               <div className="cert-visual-inner">
                 <div className="cert-visual-header">THIS IS TO CERTIFY THAT</div>
-                <div className="cert-visual-name">Alexander Johnathan Pierce</div>
+                <div className="cert-visual-name">{user?.name || "Guest Student"}</div>
                 <div className="cert-visual-sub">
                   has successfully completed the prescribed course of study<br />
                   and is hereby awarded the degree of
                 </div>
-                <div className="cert-visual-degree">Master of Science in Artificial Intelligence</div>
+                <div className="cert-visual-degree">{programmeName}</div>
                 <div className="cert-visual-meta">
                   Distinction • CGPA 3.95
                 </div>
