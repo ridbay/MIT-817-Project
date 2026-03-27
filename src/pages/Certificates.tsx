@@ -14,6 +14,7 @@ const Certificates: React.FC = () => {
   const { user, studentType, courseRecords, setVerifiedCertificates } =
     useAppContext();
   const [exportType, setExportType] = useState<'pdf' | 'img'>('pdf');
+  const [currentVerificationId, setCurrentVerificationId] = useState<string>("");
   const certificateRef = useRef<HTMLDivElement>(null);
 
   const programmeId =
@@ -37,14 +38,16 @@ const Certificates: React.FC = () => {
       : "B.Sc. Computer Science");
 
   const handleExport = async () => {
-    const verificationId = Math.floor(
-      Math.random() * 900000000000 + 100000000000,
-    ).toString();
-    setVerifiedCertificates((prev) => [...prev, verificationId]);
+    const verificationId = Math.floor(Math.random() * 900000000000 + 100000000000).toString();
+    setCurrentVerificationId(verificationId);
+    setVerifiedCertificates(prev => [...prev, verificationId]);
 
     if (exportType === 'pdf') {
-       exportCertificatePDF(user, classification, currentGPA, verificationId, pRecords);
+       exportCertificatePDF(user, classification, effectiveGPA, verificationId, pRecords);
     } else {
+       // Wait for state to update and re-render the ID in the visual
+       await new Promise(resolve => setTimeout(resolve, 100));
+       
        if (certificateRef.current) {
           const canvas = await html2canvas(certificateRef.current, {
             useCORS: true,
