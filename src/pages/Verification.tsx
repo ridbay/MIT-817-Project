@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './Verification.css';
 
-function Verification() {
-  const [verifyId, setVerifyId] = useState('');
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
+interface VerificationResult {
+  status: 'AUTHENTICATED' | 'INVALID';
+  owner?: string;
+  docType?: string;
+  dateIssued?: string;
+  hash?: string;
+  institution?: string;
+}
 
-  const handleVerify = (e) => {
+const Verification: React.FC = () => {
+  const [verifyId, setVerifyId] = useState<string>('');
+  const [result, setResult] = useState<VerificationResult | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
     if (!verifyId) return;
     
@@ -53,7 +62,7 @@ function Verification() {
                    className="ver-input" 
                    placeholder="Enter ID (e.g. VER-102-390-AF)"
                    value={verifyId}
-                   onChange={(e) => setVerifyId(e.target.value)}
+                   onChange={(e) => setVerifyId((e.target as HTMLInputElement).value)}
                  />
                  <button type="submit" className="ver-submit-btn" disabled={loading}>
                    {loading ? 'Verifying...' : 'Validate Record'}
@@ -141,6 +150,6 @@ function Verification() {
       </div>
     </div>
   );
-}
+};
 
 export default Verification;

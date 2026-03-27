@@ -1,20 +1,27 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAppContext } from "../hooks/useAppContext";
 import './AdminLogin.css';
 
-function AdminLogin() {
-  const [staffId, setStaffId] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+const AdminLogin: React.FC = () => {
+  const [staffId, setStaffId] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { setUser } = useAppContext();
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     // Simulate auth delay
     setTimeout(() => {
       setIsLoading(false);
+      setUser({
+        name: 'Admin Dean',
+        role: 'admin',
+        id: staffId || 'DIR-001'
+      });
       navigate('/dashboard/admin');
     }, 1000);
   };
@@ -55,7 +62,7 @@ function AdminLogin() {
                   type="text"
                   placeholder="e.g. DIR-001"
                   value={staffId}
-                  onChange={(e) => setStaffId(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStaffId(e.target.value)}
                   required
                 />
               </div>
@@ -72,7 +79,7 @@ function AdminLogin() {
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••••••"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                   required
                 />
                 <button
@@ -130,6 +137,6 @@ function AdminLogin() {
       </div>
     </div>
   );
-}
+};
 
 export default AdminLogin;

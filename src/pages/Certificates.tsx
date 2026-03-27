@@ -1,6 +1,7 @@
+import React from 'react';
 import './Certificates.css';
 
-function Certificates() {
+const Certificates: React.FC = () => {
   return (
     <div className="cert-page">
       {/* Breadcrumbs & Header */}
@@ -179,6 +180,6 @@ function Certificates() {
       </div>
     </div>
   );
-}
+};
 
 export default Certificates;

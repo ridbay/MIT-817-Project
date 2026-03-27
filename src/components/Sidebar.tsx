@@ -1,8 +1,17 @@
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../hooks/useAppContext';
 import './DashboardLayout.css';
 
-const studentNav = [
+type IconName = 'dashboard' | 'results' | 'cgpa' | 'certificates' | 'transcripts' | 'profile' | 'research';
+
+interface NavItem {
+  icon: IconName;
+  label: string;
+  to: string;
+}
+
+const studentNav: NavItem[] = [
   { icon: 'dashboard', label: 'Dashboard', to: '/dashboard/student' },
   { icon: 'results', label: 'Results', to: '/dashboard/student/results' },
   { icon: 'cgpa', label: 'CGPA Calculator', to: '/dashboard/student/cgpa' },
@@ -11,7 +20,7 @@ const studentNav = [
   { icon: 'profile', label: 'Profile', to: '/dashboard/student/profile' },
 ];
 
-const adminNav = [
+const adminNav: NavItem[] = [
   { icon: 'dashboard', label: 'Dashboard', to: '/dashboard/admin' },
   { icon: 'results', label: 'Results', to: '/dashboard/admin/results' },
   { icon: 'cgpa', label: 'CGPA Calculator', to: '/dashboard/admin/cgpa' },
@@ -20,7 +29,7 @@ const adminNav = [
   { icon: 'profile', label: 'Profile', to: '/dashboard/admin/profile' },
 ];
 
-function NavIcon({ icon }) {
+const NavIcon: React.FC<{ icon: IconName }> = ({ icon }) => {
   if (icon === 'dashboard')
     return (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -80,13 +89,15 @@ function NavIcon({ icon }) {
   return null;
 }
 
-function Sidebar() {
+interface SidebarProps {
+  isAdmin?: boolean;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isAdmin = false }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { studentType } = useAppContext();
-  const isAdmin = location.pathname.startsWith('/dashboard/admin');
   
-  let navItems = isAdmin ? [...adminNav] : [...studentNav];
+  const navItems: NavItem[] = isAdmin ? [...adminNav] : [...studentNav];
 
   // Add Research for PG students
   if (!isAdmin && studentType === 'pg') {
@@ -143,7 +154,7 @@ function Sidebar() {
           </svg>
           Settings
         </button>
-        <button className="sd-logout-btn" id="logout-btn" onClick={() => navigate('/login')}>
+        <button className="sd-logout-btn" id="logout-btn" onClick={() => navigate('/')}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
             <polyline points="16 17 21 12 16 7" />

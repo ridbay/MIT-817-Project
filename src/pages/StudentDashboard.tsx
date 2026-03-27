@@ -1,7 +1,19 @@
+import React from 'react';
 import { useAppContext } from '../hooks/useAppContext';
 import './StudentDashboard.css';
 
-const records = [
+interface Record {
+  id: number;
+  icon: 'doc' | 'doc-teal' | 'card';
+  title: string;
+  description: string;
+  status: string | null;
+  time: string;
+  statusColor?: string;
+  badge?: 'download' | 'check';
+}
+
+const records: Record[] = [
   {
     id: 1,
     icon: 'doc',
@@ -31,7 +43,7 @@ const records = [
   },
 ];
 
-function RecordIcon({ icon }) {
+const RecordIcon: React.FC<{ icon: 'doc' | 'doc-teal' | 'card' }> = ({ icon }) => {
   if (icon === 'doc')
     return (
       <div className="sd-record-icon sd-record-icon--blue">
@@ -62,11 +74,11 @@ function RecordIcon({ icon }) {
   return null;
 }
 
-function StudentDashboard() {
+const StudentDashboard: React.FC = () => {
   const { studentType, user } = useAppContext();
 
   // Dynamic records based on student type
-  const displayRecords = studentType === 'pg' 
+  const displayRecords: Record[] = studentType === 'pg' 
     ? records 
     : [
         {
@@ -192,7 +204,7 @@ function StudentDashboard() {
                 <RecordIcon icon={r.icon} />
                 <div className="sd-record-body">
                   <div className="sd-record-title">{r.title}</div>
-                  <div className="sd-record-desc">{r.description}</div>
+                  <div className="sd-record-body">{r.description}</div>
                 </div>
                 <div className="sd-record-right">
                   {r.status && (

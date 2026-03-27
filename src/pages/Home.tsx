@@ -1,8 +1,9 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import heroBg from '/Users/ridbay/.gemini/antigravity/brain/bb14a163-a637-4ca4-80a8-04fb467c8440/portal_landing_hero_bg_1774608778579.png';
 
-function Home() {
+const Home: React.FC = () => {
   return (
     <div className="lp-container">
       {/* Navigation */}
@@ -16,7 +17,7 @@ function Home() {
         <div className="lp-nav-links">
           <a href="#features">Features</a>
           <a href="#security">Security</a>
-          <Link to="/login" className="lp-login-btn">Login</Link>
+          <Link to="/login/student" className="lp-login-btn">Login</Link>
         </div>
       </nav>
 
@@ -34,7 +35,7 @@ function Home() {
             blockchain-verified credentials, and real-time academic standing in one unified portal.
           </p>
           <div className="lp-hero-actions">
-            <Link to="/login" className="lp-btn-primary">
+            <Link to="/login/student" className="lp-btn-primary">
               Student Dashboard
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -129,7 +130,7 @@ function Home() {
                 <h4>Portal</h4>
                 <Link to="/dashboard/student">Student View</Link>
                 <Link to="/dashboard/admin">Admin View</Link>
-                <Link to="/login">Authentication</Link>
+                <Link to="/login/student">Authentication</Link>
              </div>
              <div className="lp-link-group">
                 <h4>Resources</h4>
@@ -145,6 +146,6 @@ function Home() {
       </footer>
     </div>
   );
-}
+};
 
 export default Home;

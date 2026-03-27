@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAppContext } from '../hooks/useAppContext';
 import './Profile.css';
 
-const documents = [
+interface UserDocument {
+  id: number;
+  name: string;
+  meta: string;
+  icon: 'id' | 'doc' | 'bill';
+}
+
+const documents: UserDocument[] = [
   { id: 1, name: 'University ID Card', meta: 'VERIFIED • PDF (1.2 MB)', icon: 'id' },
   { id: 2, name: 'Admission Letter', meta: 'VERIFIED • PDF (0.8 MB)', icon: 'doc' },
   { id: 3, name: 'Tuition Receipt 2023', meta: 'ARCHIVED • JPG (2.4 MB)', icon: 'bill' },
 ];
 
-function Profile() {
+const Profile: React.FC = () => {
   const { studentType, user } = useAppContext();
-  const [tfaEnabled, setTfaEnabled] = useState(true);
+  const [tfaEnabled, setTfaEnabled] = useState<boolean>(true);
 
   const studentName = user?.name || (studentType === 'ug' ? "Alexander J. Sterling" : "Dr. Sarah Rodriguez");
   const studentMatric = user?.matric || (studentType === 'ug' ? "MAT/ENG/20/4492" : "MAT/PG/23/0012");
@@ -31,9 +38,9 @@ function Profile() {
                 </svg>
              </div>
              <button className="prof-avatar-edit" aria-label="Edit Avatar">
-               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-               </svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                </svg>
              </button>
           </div>
           <div className="prof-header-info">
@@ -183,20 +190,19 @@ function Profile() {
           {/* Document Vault Card */}
           <section className="prof-card">
             <div className="prof-card-header">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                 <cloud-upload strokeWidth="2" />
-                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                 <polyline points="17 8 12 3 7 8" />
-                 <line x1="12" y1="3" x2="12" y2="15" />
-              </svg>
-              <h2 className="prof-card-title">Document Vault</h2>
-              <button className="prof-upload-btn" aria-label="Upload">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                   <polyline points="17 8 12 3 7 8" />
                   <line x1="12" y1="3" x2="12" y2="15" />
-                </svg>
-              </button>
+               </svg>
+               <h2 className="prof-card-title">Document Vault</h2>
+               <button className="prof-upload-btn" aria-label="Upload">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+               </button>
             </div>
             
             <div className="prof-doc-list">
@@ -251,6 +257,6 @@ function Profile() {
       </div>
     </div>
   );
-}
+};
 
 export default Profile;

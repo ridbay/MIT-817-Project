@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAppContext } from '../hooks/useAppContext';
 import './CGPACalculator.css';
 
-function CGPACalculator() {
+interface CalculatorCourse {
+  name: string;
+  unit: string;
+  grade: string;
+}
+
+const CGPACalculator: React.FC = () => {
   const { studentType } = useAppContext();
-  const [programmeType, setProgrammeType] = useState(studentType === 'pg' ? 'Postgraduate' : 'Undergraduate');
-  const [courses, setCourses] = useState([
+  const [programmeType, setProgrammeType] = useState<string>(studentType === 'pg' ? 'Postgraduate' : 'Undergraduate');
+  const [courses, setCourses] = useState<CalculatorCourse[]>([
     { name: '', unit: '', grade: '' },
     { name: '', unit: '', grade: '' },
     { name: '', unit: '', grade: '' },
@@ -13,6 +19,12 @@ function CGPACalculator() {
 
   const addRow = () => setCourses([...courses, { name: '', unit: '', grade: '' }]);
   const clearAll = () => setCourses([{ name: '', unit: '', grade: '' }]);
+
+  const handleInputChange = (idx: number, field: keyof CalculatorCourse, value: string) => {
+    const newCourses = [...courses];
+    newCourses[idx][field] = value;
+    setCourses(newCourses);
+  };
 
   return (
     <div className="cgpa-page">
@@ -89,15 +101,25 @@ function CGPACalculator() {
                   type="text"
                   placeholder="e.g. Advanced Calculus (MTH 201)"
                   className="cgpa-input-name"
+                  value={course.name}
+                  onChange={(e) => handleInputChange(idx, 'name', e.target.value)}
                 />
-                <select className="cgpa-select">
+                <select 
+                  className="cgpa-select"
+                  value={course.unit}
+                  onChange={(e) => handleInputChange(idx, 'unit', e.target.value)}
+                >
                   <option value="">Select Unit</option>
                   <option value="1">1 Unit</option>
                   <option value="2">2 Units</option>
                   <option value="3">3 Units</option>
                   <option value="4">4 Units</option>
                 </select>
-                <select className="cgpa-select">
+                <select 
+                  className="cgpa-select"
+                  value={course.grade}
+                  onChange={(e) => handleInputChange(idx, 'grade', e.target.value)}
+                >
                   <option value="">Select Grade</option>
                   {programmeType === 'Undergraduate' ? (
                     <>
@@ -227,6 +249,6 @@ function CGPACalculator() {
       <button className="cgpa-help-fab">?</button>
     </div>
   );
-}
+};
 
 export default CGPACalculator;

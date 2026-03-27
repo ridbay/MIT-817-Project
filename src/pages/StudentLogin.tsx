@@ -1,32 +1,33 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../hooks/useAppContext";
+import { StudentType } from "../context/AppContext";
 import "./StudentLogin.css";
 
-function Login() {
-  const [tab, setTab] = useState("undergraduate");
-  const [showPassword, setShowPassword] = useState(false);
-  const [matric, setMatric] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+const Login: React.FC = () => {
+  const [tab, setTab] = useState<StudentType>("ug");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [matric, setMatric] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
   const navigate = useNavigate();
   const { setStudentType, setUser } = useAppContext();
 
-  const handleTabChange = (type) => {
+  const handleTabChange = (type: StudentType) => {
     setTab(type);
-    setStudentType(type === "undergraduate" ? "ug" : "pg");
+    setStudentType(type);
   };
 
   const matricPlaceholder =
-    tab === "undergraduate" ? "UG/2023/10234" : "PG/2023/00123";
+    tab === "ug" ? "UG/2023/10234" : "PG/2023/00123";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Mock user data
     setUser({
-      name: tab === "undergraduate" ? "Alex M. Thompson" : "Dr. Sarah Rodriguez",
-      matric: matric || (tab === "undergraduate" ? "UG/2023/10234" : "PG/2023/00123"),
-      type: tab === "undergraduate" ? "ug" : "pg"
+      name: tab === "ug" ? "Alex M. Thompson" : "Dr. Sarah Rodriguez",
+      matric: matric || (tab === "ug" ? "UG/2023/10234" : "PG/2023/00123"),
+      role: 'student'
     });
     navigate("/dashboard/student");
   };
@@ -110,18 +111,18 @@ function Login() {
             <button
               id="tab-ug"
               role="tab"
-              aria-selected={tab === "undergraduate"}
-              className={`login-tab ${tab === "undergraduate" ? "login-tab--active" : ""}`}
-              onClick={() => handleTabChange("undergraduate")}
+              aria-selected={tab === "ug"}
+              className={`login-tab ${tab === "ug" ? "login-tab--active" : ""}`}
+              onClick={() => handleTabChange("ug")}
             >
               UNDERGRADUATE
             </button>
             <button
               id="tab-pg"
               role="tab"
-              aria-selected={tab === "postgraduate"}
-              className={`login-tab ${tab === "postgraduate" ? "login-tab--active" : ""}`}
-              onClick={() => handleTabChange("postgraduate")}
+              aria-selected={tab === "pg"}
+              className={`login-tab ${tab === "pg" ? "login-tab--active" : ""}`}
+              onClick={() => handleTabChange("pg")}
             >
               POSTGRADUATE
             </button>
@@ -154,7 +155,7 @@ function Login() {
                   className="login-input"
                   placeholder={matricPlaceholder}
                   value={matric}
-                  onChange={(e) => setMatric(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMatric(e.target.value)}
                   autoComplete="username"
                   required
                 />
@@ -191,7 +192,7 @@ function Login() {
                   className="login-input"
                   placeholder="••••••••••••"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                   autoComplete="current-password"
                   required
                 />
@@ -235,7 +236,7 @@ function Login() {
                 type="checkbox"
                 id="remember-me"
                 checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRememberMe(e.target.checked)}
               />
               <span>Keep me signed in for 30 days</span>
             </label>
@@ -316,6 +317,6 @@ function Login() {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

@@ -1,19 +1,39 @@
+import React from 'react';
 import './AdminDashboard.css';
 
-const adminRequests = [
+interface AdminRequest {
+  id: string;
+  name: string;
+  initial: string;
+  date: string;
+  dept: string;
+  level: 'UG' | 'PG';
+  status: string;
+  statusColor: string;
+  action: string;
+}
+
+interface AdminAction {
+  id: number;
+  text: string;
+  time: string;
+  icon: 'check' | 'alert' | 'mail';
+}
+
+const adminRequests: AdminRequest[] = [
   { id: '#STU-88291', name: 'Alex M. Thompson', initial: 'AM', date: 'Oct 12, 2023', dept: 'Computer Science', level: 'UG', status: 'IN REVIEW', statusColor: 'gray', action: 'Approve' },
   { id: '#STU-92014', name: 'Sarah Rodriguez', initial: 'SR', date: 'Oct 11, 2023', dept: 'Architecture', level: 'PG', status: 'URGENT', statusColor: 'red', action: 'Approve (incl. Thesis)' },
   { id: '#STU-87720', name: 'James K. Wilson', initial: 'JK', date: 'Oct 10, 2023', dept: 'Economics', level: 'UG', status: 'PENDING', statusColor: 'gray', action: 'Approve' },
   { id: '#STU-91003', name: 'Elena Lowery', initial: 'EL', date: 'Oct 09, 2023', dept: 'Biotechnology', level: 'PG', status: 'PENDING', statusColor: 'gray', action: 'Approve (incl. Thesis)' },
 ];
 
-const adminActions = [
+const adminActions: AdminAction[] = [
   { id: 1, text: 'Registrar Sarah approved 14 transcripts for the Engineering Faculty.', time: '12 MINUTES AGO', icon: 'check' },
   { id: 2, text: 'System detected a mismatched ID for #STU-99011. Flagged for review.', time: '1 HOUR AGO', icon: 'alert' },
   { id: 3, text: 'Admin Dean broadcasted Semester Results to all departments.', time: '3 HOURS AGO', icon: 'mail' },
 ];
 
-function AdminDashboard() {
+const AdminDashboard: React.FC = () => {
   return (
     <div className="adm-page">
       {/* Overview Header */}
@@ -239,6 +259,6 @@ function AdminDashboard() {
       </div>
     </div>
   );
-}
+};
 
 export default AdminDashboard;

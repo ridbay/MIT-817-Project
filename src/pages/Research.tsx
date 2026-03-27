@@ -1,6 +1,15 @@
+import React from 'react';
 import './Research.css';
 
-const milestones = [
+interface Milestone {
+  id: number;
+  title: string;
+  date: string;
+  status: 'COMPLETED' | 'IN_PROGRESS' | 'PENDING';
+  detail: string;
+}
+
+const milestones: Milestone[] = [
   { id: 1, title: 'Thesis Proposal', date: 'Sept 12, 2023', status: 'COMPLETED', detail: 'Approved by PG Committee' },
   { id: 2, title: 'Literature Review', date: 'Oct 28, 2023', status: 'COMPLETED', detail: 'Verified by Supervisor' },
   { id: 3, title: 'Data Collection', date: 'Dec 15, 2023', status: 'IN_PROGRESS', detail: 'Field work underway' },
@@ -8,7 +17,7 @@ const milestones = [
   { id: 5, title: 'Final Defense', date: 'May 2024', status: 'PENDING', detail: 'Scheduled for Summer Session' },
 ];
 
-function Research() {
+const Research: React.FC = () => {
   return (
     <div className="res-page researcher-view">
       <div className="res-header">
@@ -106,6 +115,6 @@ function Research() {
       </div>
     </div>
   );
-}
+};
 
 export default Research;

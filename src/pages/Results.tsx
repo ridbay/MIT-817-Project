@@ -1,10 +1,19 @@
+import React from 'react';
 import { useAppContext } from '../hooks/useAppContext';
 import './Results.css';
 
-function Results() {
+interface CourseRecord {
+  code: string;
+  title: string;
+  unit: string;
+  grade: string;
+  points: string;
+}
+
+const Results: React.FC = () => {
   const { studentType } = useAppContext();
 
-  const currentCourses = studentType === 'pg' 
+  const currentCourses: CourseRecord[] = studentType === 'pg' 
     ? [
         { code: 'CSC 801', title: 'Advanced Machine Learning & Neural Networks', unit: '4.0', grade: 'A', points: '20.0' },
         { code: 'MIT 805', title: 'Enterprise Architecture & Cloud Strategy', unit: '3.0', grade: 'A', points: '15.0' },
@@ -217,6 +226,6 @@ function Results() {
       </button>
     </div>
   );
-}
+};
 
 export default Results;

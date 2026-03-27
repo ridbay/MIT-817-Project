@@ -1,12 +1,24 @@
+import React from 'react';
 import './Transcripts.css';
 
-const history = [
+interface TranscriptHistory {
+  id: string;
+  date: string;
+  programme: string;
+  destination: string;
+  sub: string;
+  type: string;
+  status: string;
+  statusColor: string;
+}
+
+const history: TranscriptHistory[] = [
   { id: '#TR-8821', date: 'Oct 24, 2023', programme: 'UG', destination: 'Harvard Graduate School', sub: 'admissions@gsas.harvard.edu', type: 'DIGITAL', status: 'SENT', statusColor: 'teal' },
   { id: '#TR-9042', date: 'Nov 02, 2023', programme: 'PG', destination: 'JP Morgan Chase & Co', sub: '100 Madison Ave, NY', type: 'HARD COPY', status: 'APPROVED', statusColor: 'blue' },
   { id: '#TR-9115', date: 'Nov 15, 2023', programme: 'UG', destination: 'General Medical Council', sub: 'verifications@gmc-uk.org', type: 'DIGITAL', status: 'PENDING', statusColor: 'red' },
 ];
 
-function Transcripts() {
+const Transcripts: React.FC = () => {
   return (
     <div className="tr-page">
       {/* Header */}
@@ -217,6 +229,6 @@ function Transcripts() {
       </section>
     </div>
   );
-}
+};
 
 export default Transcripts;

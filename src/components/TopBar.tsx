@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './DashboardLayout.css';
 
-function TopBar() {
-  const [searchVal, setSearchVal] = useState('');
+const TopBar: React.FC = () => {
+  const [searchVal, setSearchVal] = useState<string>('');
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/dashboard/admin');
 
@@ -20,7 +20,7 @@ function TopBar() {
           type="search"
           placeholder={isAdmin ? "Search students, transcript IDs or certificates..." : "Search academic records, courses or results..."}
           value={searchVal}
-          onChange={(e) => setSearchVal(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchVal(e.target.value)}
         />
       </div>
       <div className="sd-topbar-actions">
@@ -59,6 +59,6 @@ function TopBar() {
       </div>
     </header>
   );
-}
+};
 
 export default TopBar;
