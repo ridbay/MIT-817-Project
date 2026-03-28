@@ -45,7 +45,7 @@ const AcademicRules: React.FC = () => {
           </div>
           <div className="admin-rule-item">
              <div className="admin-rule-header">
-                <div>Nigerian PG Scale (UNILAG/scholarNode)</div>
+                <div>Nigerian PG Scale (UNILAG Records)</div>
                 <div className="admin-rule-tag">ACTIVE</div>
              </div>
              <div className="admin-scale-preview">

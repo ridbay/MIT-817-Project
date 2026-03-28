@@ -23,7 +23,7 @@ const ResultManager: React.FC = () => {
             dept: "General Studies", 
             session: "2024/25", 
             count: 240, 
-            uploader: "Admin - scholarNode", 
+            uploader: "Admin - UNILAG Records", 
             status: "PENDING" 
           };
           setResults([newRes, ...results]);

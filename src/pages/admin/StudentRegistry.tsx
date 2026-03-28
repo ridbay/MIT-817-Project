@@ -76,7 +76,7 @@ const StudentRegistry: React.FC = () => {
       <div className="admin-header">
         <div>
           <h1 className="admin-title">Student Registry</h1>
-          <p className="admin-subtitle">Central management for all scholarNode enrolled students.</p>
+          <p className="admin-subtitle">Central management for all UNILAG Records enrolled students.</p>
         </div>
         <button className="admin-primary-btn" onClick={() => setShowModal(true)}>+ Register Student</button>
       </div>

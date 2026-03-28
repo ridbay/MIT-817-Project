@@ -10,7 +10,7 @@ export const exportTranscriptPDF = (user: User | null, records: CourseAttempt[],
   // Header
   doc.setFontSize(22);
   doc.setTextColor(44, 62, 80);
-  doc.text('scholarNode', pageWidth / 2, 20, { align: 'center' });
+  doc.text('UNIVERSITY OF LAGOS', pageWidth / 2, 20, { align: 'center' });
   
   doc.setFontSize(14);
   doc.text('OFFICIAL ACADEMIC TRANSCRIPT', pageWidth / 2, 30, { align: 'center' });
@@ -62,7 +62,7 @@ export const exportTranscriptPDF = (user: User | null, records: CourseAttempt[],
   const finalY = (doc as any).lastAutoTable.finalY || 150;
   doc.setFontSize(10);
   doc.setTextColor(100);
-  doc.text('This is an electronically generated document. Verify at scholarnode.edu/verify', pageWidth / 2, finalY + 20, { align: 'center' });
+  doc.text('This is an electronically generated document. Verify at unilagrecords.edu.ng/verify', pageWidth / 2, finalY + 20, { align: 'center' });
 
   doc.save(`${user?.matric || 'transcript'}_records.pdf`);
 };

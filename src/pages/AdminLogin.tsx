@@ -33,7 +33,7 @@ const AdminLogin: React.FC = () => {
 
   const fillDemo = () => {
     setStaffId('REG-NG-001');
-    setPassword('scholarNode2026!');
+    setPassword('unilagPortal2026!');
   };
 
   return (

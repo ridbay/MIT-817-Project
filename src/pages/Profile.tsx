@@ -41,7 +41,7 @@ const Profile: React.FC = () => {
   const studentLevel = user?.level || (studentType === 'ug' ? "400L" : "Masters (MIT)");
   const studentProgramme = user?.programmeName || (studentType === 'ug' ? "B.Sc. Computer Science" : "M.Sc. Information Technology");
   const studentTypeLabel = studentType === 'ug' ? "UNDERGRADUATE" : "POSTGRADUATE";
-  const studentEmail = user?.email || "student@scholarnode.edu.ng";
+  const studentEmail = user?.email || "student@unilagrecords.edu.ng";
   const studentDept = user?.department || "Computer Science";
 
   return (

@@ -137,7 +137,7 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div className="lp-footer-bottom">
-           &copy; 2026 scholarNode. All Rights Reserved.
+           &copy; 2026 UNILAG Records. All Rights Reserved.
         </div>
       </footer>
     </div>

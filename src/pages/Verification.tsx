@@ -54,7 +54,7 @@ const Verification: React.FC = () => {
           docType: 'Degree Certificate',
           dateIssued: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
           hash: `0x${Math.random().toString(16).slice(2, 10)}...${Math.random().toString(16).slice(2, 6)}`,
-          institution: 'scholarNode Academy',
+          institution: 'UNILAG Records',
         });
       } else if (verifyId.toUpperCase().startsWith('VER-')) {
         setResult({
@@ -63,7 +63,7 @@ const Verification: React.FC = () => {
           docType: 'Official Transcript',
           dateIssued: 'Oct 24, 2023',
           hash: '0x7e2...9a12',
-          institution: 'scholarNode University',
+          institution: 'UNILAG Records',
         });
       } else {
         setResult({ status: 'INVALID' });

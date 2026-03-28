@@ -54,7 +54,7 @@ const Certificates: React.FC = () => {
             backgroundColor: '#ffffff'
           } as any);
           const link = document.createElement('a');
-          link.download = `Certificate_${user?.matric || 'scholarNode'}.png`;
+          link.download = `Certificate_${user?.matric || 'UNILAG_Records'}.png`;
           link.href = canvas.toDataURL('image/png');
           link.click();
        }
