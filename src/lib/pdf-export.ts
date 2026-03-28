@@ -131,10 +131,10 @@ export const exportCertificatePDF = (user: User | null, standing: string, curren
   doc.line(40, pageHeight - 40, 100, pageHeight - 40);
   doc.setFont('courier', 'italic', 'bold');
   doc.setTextColor(44, 100, 160);
-  doc.text('O. Adebayo', 70, pageHeight - 42, { align: 'center' }); // Auto-signature
+  doc.text('V. A. Wickliffe', 70, pageHeight - 42, { align: 'center' }); // Auto-signature
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(100);
-  doc.text('Mrs. Olufunmilayo Adebayo', 70, pageHeight - 33, { align: 'center' });
+  doc.text('Mrs. Victoria Abosede Wickliffe', 70, pageHeight - 33, { align: 'center' });
   doc.setFontSize(8);
   doc.text('University Registrar', 70, pageHeight - 28, { align: 'center' });
   
@@ -143,10 +143,10 @@ export const exportCertificatePDF = (user: User | null, standing: string, curren
   doc.line(pageWidth - 100, pageHeight - 40, pageWidth - 40, pageHeight - 40);
   doc.setFont('courier', 'italic', 'bold');
   doc.setTextColor(44, 100, 160);
-  doc.text('I. Gambari', pageWidth - 70, pageHeight - 42, { align: 'center' }); // Auto-signature
+  doc.text('F. T. Ogunsola', pageWidth - 70, pageHeight - 42, { align: 'center' }); // Auto-signature
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(100);
-  doc.text('Prof. Ibrahim Gambari', pageWidth - 70, pageHeight - 33, { align: 'center' });
+  doc.text('Prof. Folasade Tolulope Ogunsola', pageWidth - 70, pageHeight - 33, { align: 'center' });
   doc.setFontSize(8);
   doc.text('Vice Chancellor', pageWidth - 70, pageHeight - 28, { align: 'center' });
 

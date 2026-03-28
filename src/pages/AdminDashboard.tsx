@@ -36,7 +36,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   const adminActions: AdminAction[] = [
-    { id: 1, text: 'Registrar Funmi approved 14 transcripts for the Engineering Faculty.', time: '12 MINUTES AGO', icon: 'check' },
+    { id: 1, text: 'Registrar Victoria approved 14 transcripts for the Engineering Faculty.', time: '12 MINUTES AGO', icon: 'check' },
     { id: 2, text: 'System detected a mismatched ID for #STU-99011. Flagged for review.', time: '1 HOUR AGO', icon: 'alert' },
     { id: 3, text: 'Admin Dean broadcasted Semester Results to all departments.', time: '3 HOURS AGO', icon: 'mail' },
   ];
