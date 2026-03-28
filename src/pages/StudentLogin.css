@@ -52,15 +52,21 @@
 }
 
 .login-logo {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  background: #1a2e54;
+  width: 50px;
+  height: 50px;
+  background: #2563eb;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.75rem;
-  box-shadow: 0 4px 14px rgba(26, 46, 84, 0.35);
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.login-logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 
 .login-logo svg {

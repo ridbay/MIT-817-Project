@@ -40,6 +40,13 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.sd-brand-logo-img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
 }
 
 .sd-brand-name {
@@ -157,13 +164,43 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 0.75rem 2rem;
   background: #fff;
   border-bottom: 1px solid #e8edf4;
   gap: 1.5rem;
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+.sd-topbar-brand {
+  display: none; /* Hide by default, show on mobile or if sidebar is collapsed */
+  align-items: center;
+  gap: 0.75rem;
+  background: #f8fafc;
+  padding: 0.4rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #e8edf4;
+}
+
+.sd-topbar-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+.sd-topbar-brand-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a2e54;
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .sd-topbar-brand {
+    display: flex;
+  }
 }
 
 .sd-search-wrapper {

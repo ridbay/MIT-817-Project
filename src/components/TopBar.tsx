@@ -16,6 +16,10 @@ const TopBar: React.FC = () => {
 
   return (
     <header className="sd-topbar">
+      <div className="sd-topbar-brand">
+        <img src="/UNILAG_LOGO.png" alt="UNILAG Logo" className="sd-topbar-logo" />
+        <span className="sd-topbar-brand-name">UNILAG Records</span>
+      </div>
       <div className="sd-search-wrapper">
         <svg className="sd-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
           <circle cx="11" cy="11" r="8" />

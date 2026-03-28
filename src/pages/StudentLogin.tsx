@@ -102,15 +102,9 @@ const Login: React.FC = () => {
         {/* Logo */}
         <header className="login-header">
           <div className="login-logo">
-            <svg
-              viewBox="0 0 24 24"
-              fill="white"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
-            </svg>
+            <img src="/UNILAG_LOGO.png" alt="UNILAG Logo" className="login-logo-img" />
           </div>
-          <h1 className="login-title">scholarNode</h1>
+          <h1 className="login-title">UNILAG Records</h1>
           <p className="login-subtitle">UNIVERSITY RECORDS</p>
         </header>
 

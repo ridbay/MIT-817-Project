@@ -129,12 +129,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isAdmin = false }) => {
     <aside className="sd-sidebar">
       <div className="sd-brand">
         <div className="sd-brand-logo">
-          <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
-            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
-          </svg>
+          <img src="/UNILAG_LOGO.png" alt="UNILAG Logo" className="sd-brand-logo-img" />
         </div>
         <div>
-          <div className="sd-brand-name">scholarNode</div>
+          <div className="sd-brand-name">UNILAG Records</div>
           <div className="sd-brand-sub">UNIVERSITY RECORDS</div>
         </div>
       </div>

@@ -26,6 +26,12 @@
   color: white;
 }
 
+.lp-logo-img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
 .lp-logo-text {
   font-family: 'Outfit', sans-serif;
   font-size: 1.25rem;

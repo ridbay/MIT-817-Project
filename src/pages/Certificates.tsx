@@ -243,6 +243,9 @@ const Certificates: React.FC = () => {
               {/* Mock Certificate Content */}
               <div className="cert-visual-inner">
                 <div className="cert-visual-header">
+                  <img src="/UNILAG_LOGO.png" alt="UNILAG Logo" className="cert-visual-logo" />
+                  <div className="cert-visual-institute">UNIVERSITY OF LAGOS</div>
+                  <div className="cert-visual-sep" />
                   THIS IS TO CERTIFY THAT
                 </div>
                 <div className="cert-visual-name">

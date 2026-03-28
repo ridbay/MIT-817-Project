@@ -10,6 +10,17 @@
   color: #1a2e54;
 }
 
+.al-logo {
+  margin-bottom: 1.5rem;
+  color: #1a2e54;
+}
+
+.al-logo-img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
 .al-container {
   width: 100%;
   max-width: 440px;

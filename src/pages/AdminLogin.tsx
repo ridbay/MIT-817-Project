@@ -42,11 +42,9 @@ const AdminLogin: React.FC = () => {
         {/* Top Branding Section */}
         <header className="al-header">
           <div className="al-logo">
-             <svg viewBox="0 0 24 24" fill="currentColor" width="36" height="36">
-               <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
-             </svg>
+             <img src="/UNILAG_LOGO.png" alt="UNILAG Logo" className="al-logo-img" />
           </div>
-          <h1 className="al-title">scholarNode</h1>
+          <h1 className="al-title">UNILAG Records</h1>
           <div className="al-subtitle">REGISTRAR SERVICES</div>
         </header>
 

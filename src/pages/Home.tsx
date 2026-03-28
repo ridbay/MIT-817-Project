@@ -9,10 +9,8 @@ const Home: React.FC = () => {
       {/* Navigation */}
       <nav className="lp-nav">
         <div className="lp-logo">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
-            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
-          </svg>
-          <span className="lp-logo-text">University Portal</span>
+          <img src="/UNILAG_LOGO.png" alt="UNILAG Logo" className="lp-logo-img" />
+          <span className="lp-logo-text">UNILAG Records</span>
         </div>
         <div className="lp-nav-links">
           <a href="#features">Features</a>
@@ -116,10 +114,8 @@ const Home: React.FC = () => {
         <div className="lp-footer-content">
           <div className="lp-footer-info">
             <div className="lp-logo">
-               <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                 <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
-               </svg>
-               <span className="lp-logo-text">University Portal</span>
+               <img src="/UNILAG_LOGO.png" alt="UNILAG Logo" className="lp-logo-img" />
+               <span className="lp-logo-text">UNILAG Records</span>
             </div>
             <p className="lp-footer-desc">
               Empowering students and administrators with cutting-edge academic records management.
